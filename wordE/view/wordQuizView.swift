@@ -47,7 +47,7 @@ struct wordQuizView: View {
                 
                 Spacer()
                 
-                //flashCardView Area
+                flashCardView()
                 
                 Spacer()
                 
@@ -75,9 +75,11 @@ struct wordQuizView: View {
                     }
 
                 }
+                
+                Spacer()
             }
             .padding([.leading, .trailing], 42)
-            .padding(.bottom, 50)
+//            .padding(.bottom, 50)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading, content:{
                     Button("", systemImage: backButtonSymbol){
