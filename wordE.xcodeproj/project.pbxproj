@@ -14,7 +14,6 @@
 		6255D5E82D52273200CAD3E7 /* Exceptions for "wordE" folder in "wordE" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				view/wordQuizView.swift,
 				wordDictionary.swift,
 			);
 			target = 6255D5BE2D52067A00CAD3E7 /* wordE */;
@@ -26,7 +25,6 @@
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
 			buildPhase = 6255D5BD2D52067A00CAD3E7 /* Resources */;
 			membershipExceptions = (
-				view/wordQuizView.swift,
 				wordDictionary.swift,
 			);
 		};
