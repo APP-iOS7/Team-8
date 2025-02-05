@@ -30,105 +30,120 @@ struct ResultView: View {
     }
     
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                VStack {
-                    HStack {
-                        Image(systemName: "checkmark")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundStyle(Color("checkColor"))
-                        
-                        Text("정답 수: \(correctCount)")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundStyle(Color("resultFontColor"))
+        NavigationView {
+            VStack {
+                Spacer()
+                HStack {
+                    VStack {
+                        HStack {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 20, weight: .semibold))
+                                .foregroundStyle(Color("checkColor"))
+                            
+                            Text("정답 수: \(correctCount)")
+                                .font(.system(size: 20, weight: .semibold))
+                                .foregroundStyle(Color("resultFontColor"))
+                        }
+                        HStack {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 20, weight: .semibold))
+                                .foregroundStyle(Color("xmarkColor"))
+                            Text("오답 수: \(wrongCount)")
+                                .font(.system(size: 20, weight: .semibold))
+                                .foregroundStyle(Color("resultFontColor"))
+                        }
                     }
-                    HStack {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundStyle(Color("xmarkColor"))
-                        Text("오답 수: \(wrongCount)")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundStyle(Color("resultFontColor"))
-                    }
-                }
-                .padding()
-                // 원형 차트
-                CircularChartView(correctPercentage: correctPercentage)
-                    .frame(width: 130, height: 130)
                     .padding()
-            }
-            
-            Spacer()
-            
-            Spacer()
-            ScrollView {
-                HStack {
-                    Text("Apple")
-                        .font(.system(size: 21, weight: .semibold))
-                        .foregroundStyle(Color("xmarkColor"))
+                    // 원형 차트
+                    CircularChartView(correctPercentage: correctPercentage)
+                        .frame(width: 130, height: 130)
                         .padding()
-                    Spacer()
-                    // 북마크 버튼
-                    Button(action: {
-                        isBookmarked.toggle()
-                    }) {
-                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
-                            .foregroundStyle(isBookmarked ? Color("bookmarkColor") : .gray)
-                            .padding()
+                }
+                
+                Spacer()
+                
+                ScrollView {
+                    VStack {
+                        // 오답 단어 표시
+                        ForEach(words.filter { !$0.isCorrect }) { word in
+                            NavigationLink(destination: FlashCardView()) {
+                                VStack {
+                                    HStack {
+                                        Text("\(word.word)")
+                                            .font(.system(size: 21, weight: .semibold))
+                                            .foregroundStyle(Color("xmarkColor"))
+                                            .padding()
+                                        Spacer()
+                                        // 북마크 버튼
+                                        Button(action: {
+                                            isBookmarked.toggle()
+                                        }) {
+                                            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                                                .foregroundStyle(isBookmarked ? Color("bookmarkColor") : .gray)
+                                                .padding()
+                                        }
+                                    }
+                                    .frame(width: .infinity, height: 50)
+                                    .background(Color("sectionBackColor"))
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 13).stroke(Color("sectionBorderColor"))
+                                    }
+                                }
+                            }
+                        }
+                        
+                        Divider()
+                            .frame(width: .infinity, height: 25)
+                            .foregroundStyle(Color("bookmarkColor"))
+                        
+                        // 정답 단어 표시
+                        ForEach(words.filter { $0.isCorrect }) { word in
+                            NavigationLink(destination: FlashCardView()) {
+                                VStack {
+                                    HStack {
+                                        Text("\(word.word)")
+                                            .font(.system(size: 21, weight: .semibold))
+                                            .foregroundStyle(Color("xmarkColor"))
+                                            .padding()
+                                        Spacer()
+                                        // 북마크 버튼
+                                        Button(action: {
+                                            isBookmarked.toggle()
+                                        }) {
+                                            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                                                .foregroundStyle(isBookmarked ? Color("bookmarkColor") : .gray)
+                                                .padding()
+                                        }
+                                    }
+                                    .frame(width: .infinity, height: 50)
+                                    .background(Color("sectionBackColor"))
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 13).stroke(Color("sectionBorderColor"))
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-                .frame(width: .infinity, height: 50)
-                .background(Color("sectionBackColor"))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 13).stroke(Color("sectionBorderColor"))
-                }
-                
-                Divider()
-                    .frame(width: .infinity, height: 25)
-                    .foregroundStyle(Color("bookmarkColor"))
-                
-                HStack {
-                    Text("Banana")
-                        .font(.system(size: 21, weight: .semibold))
-                        .foregroundStyle(Color("checkColor"))
-                        .padding()
-                    Spacer()
-                    // 북마크 버튼
-                    Button(action: {
-                        isBookmarked.toggle()
-                    }) {
-                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
-                            .foregroundStyle(isBookmarked ? Color("bookmarkColor") : .gray)
-                            .padding()
-                    }
-                }
-                .frame(width: .infinity, height: 50)
-                .background(Color("sectionBackColor"))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 13).stroke(Color("sectionBorderColor"))
-                }
-                
-            }
-        }.padding(.horizontal, 42)  // 좌우 여백
-        
+            }.padding(.horizontal, 42)  // 좌우 여백
+        }
         Spacer()
     }
 }
 
 struct CircularChartView: View {
     var correctPercentage: Double // 0~100 사이 값
-
+    
     var body: some View {
         ZStack {
-            // 배경 원 (연한 회색)
+            // 배경 원
             Circle()
                 .stroke(Color.white)
             
             Text("\(Int(correctPercentage))%")
                 .font(.system(size: 23, weight: .semibold))
                 .foregroundStyle(Color("resultFontColor"))
-
+            
             // 정답 퍼센트 원형 차트
             Circle()
                 .trim(from: 0, to: correctPercentage / 100) // 정답 퍼센트 만큼 자르기
