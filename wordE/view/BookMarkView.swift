@@ -11,8 +11,10 @@ import SwiftData
 struct BookMarkView: View {
     @Query var words: [wordDictionary]
     @State private var sortOrder: SortOrder = .ascending
+    @State private var isBookmarked: Bool = false
     
     var sortedWords: [wordDictionary] {
+        // 북마크된 단어들만 추출
         let bookmarkedWords = words.filter { $0.isBookmarked }
         return bookmarkedWords.sorted {
             sortOrder == .ascending ? $0.word < $1.word : $0.word > $1.word
@@ -28,7 +30,7 @@ struct BookMarkView: View {
                     Text("내림차순").tag(SortOrder.descending)
                 }
                 .padding(.trailing, 70)
-                .pickerStyle(.menu) // 메뉴 스타일 적용
+                .pickerStyle(.menu)
                 .frame(width: 180, height: 40)
                 .background(Color("pickerColor"))
                 .tint(Color("TextColor"))
@@ -41,25 +43,38 @@ struct BookMarkView: View {
             .offset(x: -70, y: 90)
             
             Spacer()
-            NavigationStack {
-                List(sortedWords, id: \.word) { word in
-                    NavigationLink(destination: ContentView(/*word: word*/)) {
-                        HStack {
-                            Text(word.word)
-                                .font(.title3)
-                                .bold()
-                            Spacer()
-                            Image(systemName: "bookmark.fill")
-                                .foregroundStyle(Color("bookmarkColor"))
+            ScrollView {
+                VStack {
+                    ForEach(words.filter { !$0.isCorrect }) { word in
+                        NavigationLink(destination: ContentView(/*word: word*/)) {
+                            VStack {
+                                HStack {
+                                    Text("\(word.word)")
+                                        .font(.system(size: 21, weight: .semibold))
+                                        .foregroundStyle(Color("xmarkColor"))
+                                        .padding()
+                                    Spacer()
+                                    // 북마크 버튼
+                                    Button(action: {
+                                        isBookmarked.toggle()
+                                    }) {
+                                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                                            .foregroundStyle(isBookmarked ? Color("bookmarkColor") : .gray)
+                                            .padding()
+                                    }
+                                }
+                                .frame(width: .infinity, height: 50)
+                                .background(Color("sectionBackColor"))
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 13).stroke(Color("sectionBorderColor"))
+                                }
+                            }
                         }
-                        .padding()
                     }
                 }
-                .navigationBarTitleDisplayMode(.inline)
             }
-            Spacer()
         }
-        
+        Spacer()
     }
 }
 
