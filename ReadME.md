@@ -28,7 +28,10 @@
 
 
 ## 개발 환경
+- SwiftUI
+- SwiftData
 
 ## 기술 스택
+
 
 
