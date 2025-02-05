@@ -66,7 +66,7 @@ struct ResultView: View {
                     VStack {
                         // 오답 단어 표시
                         ForEach(words.filter { !$0.isCorrect }) { word in
-                            NavigationLink(destination: FlashCardView()) {
+                            NavigationLink(destination: ContentView()) {
                                 VStack {
                                     HStack {
                                         Text("\(word.word)")
@@ -98,7 +98,7 @@ struct ResultView: View {
                         
                         // 정답 단어 표시
                         ForEach(words.filter { $0.isCorrect }) { word in
-                            NavigationLink(destination: FlashCardView()) {
+                            NavigationLink(destination: ContentView()) {
                                 VStack {
                                     HStack {
                                         Text("\(word.word)")

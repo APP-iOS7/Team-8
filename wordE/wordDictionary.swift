@@ -23,4 +23,7 @@ final class wordDictionary {
         self.isBookmarked = isBookmarked
         self.isCorrect = isCorrect
     }
+    
 }
+
+
