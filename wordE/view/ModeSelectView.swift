@@ -27,7 +27,7 @@ struct ModelSelectView: View {
                     .background(Color("ButtonBackgroundColor"))
                     .cornerRadius(15)
                 }
-                NavigationLink(destination: ContentView()) {
+                NavigationLink(destination: BookMarkView()) {
                     HStack {
                         Text("북마크")
                             .font(.system(size: 17))
