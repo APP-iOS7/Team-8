@@ -1,0 +1,82 @@
+[
+    {
+        "word" : "Apple",
+        "meaning" : "사과",
+        "imgPath" : "appleImage",
+        "isBookmarked" : false,
+        "isCorrect" : false
+    },
+    
+    {
+        "word" : "Banana",
+        "meaning" : "바나나",
+        "imgPath" : "bananaImage",
+        "isBookmarked" : false,
+        "isCorrect" : false
+    },
+    
+    {
+        "word" : "Orange",
+        "meaning" : "오렌지",
+        "imgPath" : "orangeImage",
+        "isBookmarked" : false,
+        "isCorrect" : false
+    },
+    
+    {
+        "word" : "Melon",
+        "meaning" : "멜론",
+        "imgPath" : "melonImage",
+        "isBookmarked" : false,
+        "isCorrect" : false
+    },
+    
+    {
+        "word" : "Watermelon",
+        "meaning" : "수박",
+        "imgPath" : "watermelonImage",
+        "isBookmarked" : false,
+        "isCorrect" : false
+    },
+    
+    
+    {
+        "word" : "Strawberry",
+        "meaning" : "딸기",
+        "imgPath" : "strawberryImage",
+        "isBookmarked" : false,
+        "isCorrect" : false
+    },
+    
+    {
+        "word" : "Lemon",
+        "meaning" : "레몬",
+        "imgPath" : "lemonImage",
+        "isBookmarked" : false,
+        "isCorrect" : false
+    },
+    
+    {
+        "word" : "Kiwi",
+        "meaning" : "키위",
+        "imgPath" : "kiwiImage",
+        "isBookmarked" : false,
+        "isCorrect" : false
+    },
+    
+    {
+        "word" : "Cherry",
+        "meaning" : "체리",
+        "imgPath" : "cherryImage",
+        "isBookmarked" : false,
+        "isCorrect" : false
+    },
+    
+    {
+        "word" : "Plum",
+        "meaning" : "자두",
+        "imgPath" : "plumImage",
+        "isBookmarked" : false,
+        "isCorrect" : false
+    },
+]
