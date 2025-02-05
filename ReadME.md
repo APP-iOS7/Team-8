@@ -55,9 +55,9 @@
 
 
 ## 개발 환경
-- SwiftUI
-- SwiftData
+- xcode
 
 ## 기술 스택
+- SwiftData
 
 
