@@ -12,19 +12,17 @@ struct ResultView: View {
     @Environment(\.modelContext) private var modelContext
     @Query var words: [wordDictionary]
     
-    var correctCount: Int = 3
-    var wrongCount: Int = 5
     @State private var isBookmarked: Bool = false
     
-//    // 정답 개수
-//    private var correctCount: Int {
-//        words.filter { $0.isCorrect }.count
-//    }
+    // 정답 개수
+    private var correctCount: Int {
+        words.filter { $0.isCorrect }.count
+    }
     
-//    // 오답 개수
-//    private var wrongCount: Int {
-//        words.count - correctCount
-//    }
+    // 오답 개수
+    private var wrongCount: Int {
+        words.count - correctCount
+    }
     
     // 정답 비율 (퍼센트)
     private var correctPercentage: Double {
@@ -127,7 +125,7 @@ struct CircularChartView: View {
             Circle()
                 .stroke(Color.white)
             
-            Text("59%")
+            Text("\(Int(correctPercentage))%")
                 .font(.system(size: 23, weight: .semibold))
                 .foregroundStyle(Color("resultFontColor"))
 
