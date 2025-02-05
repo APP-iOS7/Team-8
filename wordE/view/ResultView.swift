@@ -9,17 +9,26 @@ import SwiftUI
 import SwiftData
 
 struct ResultView: View {
-    
+    @Environment(\.modelContext) private var modelContext
     @Query var words: [wordDictionary]
+    
+    var correctCount: Int = 3
+    var wrongCount: Int = 5
+    @State private var isBookmarked: Bool = false
     
 //    // 정답 개수
 //    private var correctCount: Int {
 //        words.filter { $0.isCorrect }.count
 //    }
     
-    // 오답 개수
-    private var wrongCount: Int {
-        words.count - correctCount
+//    // 오답 개수
+//    private var wrongCount: Int {
+//        words.count - correctCount
+//    }
+    
+    // 정답 비율 (퍼센트)
+    private var correctPercentage: Double {
+        words.isEmpty ? 0 : (Double(correctCount) / Double(words.count)) * 100
     }
     
     var body: some View {
@@ -32,10 +41,7 @@ struct ResultView: View {
                             .font(.system(size: 20, weight: .semibold))
                             .foregroundStyle(Color("checkColor"))
                         
-                        Text("정답 수: ")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundStyle(Color("resultFontColor"))
-                        Text("1")
+                        Text("정답 수: \(correctCount)")
                             .font(.system(size: 20, weight: .semibold))
                             .foregroundStyle(Color("resultFontColor"))
                     }
@@ -43,10 +49,7 @@ struct ResultView: View {
                         Image(systemName: "xmark")
                             .font(.system(size: 20, weight: .semibold))
                             .foregroundStyle(Color("xmarkColor"))
-                        Text("오답 수: ")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundStyle(Color("resultFontColor"))
-                        Text("1")
+                        Text("오답 수: \(wrongCount)")
                             .font(.system(size: 20, weight: .semibold))
                             .foregroundStyle(Color("resultFontColor"))
                     }
@@ -68,9 +71,14 @@ struct ResultView: View {
                         .foregroundStyle(Color("xmarkColor"))
                         .padding()
                     Spacer()
-                    Image(systemName: "bookmark")
-                        .foregroundStyle(Color("bookmarkColor"))
-                        .padding()
+                    // 북마크 버튼
+                    Button(action: {
+                        isBookmarked.toggle()
+                    }) {
+                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                            .foregroundStyle(isBookmarked ? Color("bookmarkColor") : .gray)
+                            .padding()
+                    }
                 }
                 .frame(width: .infinity, height: 50)
                 .background(Color("sectionBackColor"))
@@ -88,9 +96,14 @@ struct ResultView: View {
                         .foregroundStyle(Color("checkColor"))
                         .padding()
                     Spacer()
-                    Image(systemName: "bookmark")
-                        .foregroundStyle(Color("bookmarkColor"))
-                        .padding()
+                    // 북마크 버튼
+                    Button(action: {
+                        isBookmarked.toggle()
+                    }) {
+                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                            .foregroundStyle(isBookmarked ? Color("bookmarkColor") : .gray)
+                            .padding()
+                    }
                 }
                 .frame(width: .infinity, height: 50)
                 .background(Color("sectionBackColor"))
@@ -129,5 +142,5 @@ struct CircularChartView: View {
 }
 
 #Preview {
-    ResultView(correct: 3, wrong: 2)
+    ResultView()
 }
