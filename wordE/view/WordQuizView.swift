@@ -1,6 +1,6 @@
-//Version: 0_1_1
-//Date: 2025-02-05(Tue)
-//Content: Word Quiz view
+//Version: 0_2_1
+//Date: 2025-02-05(Wed)
+//Content: Draft UI
 
 import SwiftUI
 
@@ -21,7 +21,10 @@ extension Color {
     }
 }
 
-struct wordQuizView: View {
+struct WordQuizView: View {
+    @Environment(\.dismiss) var dismiss
+    
+    
     private var primaryColor: Color = Color(hex:" #5AA0C8")
     private var backButtonColor: Color = Color(.black)
     private var subTextColor: Color = Color(hex: "#8A8787")
@@ -30,14 +33,28 @@ struct wordQuizView: View {
     private var backButtonSymbol: String = "chevron.left"
     private var textFieldButtonSymbol: String = "arrow.right.circle"
     
+
     @State private var progressPercent: Float = 0.0
+    @State private var dummyDataList: [dummyData]
+    @State private var dummyDataItem: dummyData
+    @State private var dummyDataItemIndex: Int = 0
     @State private var textFieldText: String = ""
+    @State var resultList: [dummyData] = []
+    @State private var isFinised: Bool = false
+    
+    init() {
+        let loadedData: [dummyData] = loadJsonData(filename: "dummyWordData").shuffled()
+        self.dummyDataList = loadedData
+        self.dummyDataItem = loadedData[0]
+        self._progressPercent = State(initialValue: 1 / Float(dummyDataList.count))
+    }
     
     var body: some View {
         NavigationStack {
             VStack {
+                //progressView
                 VStack(alignment: .trailing) {
-                    ProgressView(value: progressPercent,total: 1)
+                    ProgressView(value: progressPercent, total: 1)
                         .progressViewStyle(customProgressStyle())
                     Text("\(progressPercent * 100, specifier: "%.0f")%")
                         .foregroundStyle(subTextColor)
@@ -47,17 +64,19 @@ struct wordQuizView: View {
                 
                 Spacer()
                 
-                flashCardView()
+                //FlashCardView
+                FlashCardView(wordInfo: dummyDataItem)
                 
                 Spacer()
                 
+                // TextField
                 VStack(alignment: .leading) {
                     Text("단어를 맞춰보세요!")
-                        .frame(width: .infinity, height: 26, alignment: .leading)
+                        .frame(width: 200, height: 26, alignment: .leading)
                         .padding(.bottom, 10)
                         .foregroundStyle(subTextColor)
                         .font(.system(size: 15))
-                        
+                    
                     ZStack(alignment: .trailing) {
                         TextField("", text: $textFieldText)
                             .frame(height:49)
@@ -67,28 +86,60 @@ struct wordQuizView: View {
                                     .stroke(textFieldBorderColor, lineWidth: 1)
                             )
                         Button("", systemImage: textFieldButtonSymbol) {
-                            print("dd")
+                            chageFlashCardView()
                         }
                         .foregroundStyle(primaryColor)
                         .frame(width: 18, height: 18)
                         .padding(.trailing, 10)
                     }
-
+                    
                 }
-                
                 Spacer()
             }
             .padding([.leading, .trailing], 42)
-//            .padding(.bottom, 50)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading, content:{
+                ToolbarItem(placement: .navigationBarLeading, content: {
                     Button("", systemImage: backButtonSymbol){
-                        print("clicked")
+                        dismiss()
                     }
                     .tint(backButtonColor)
                 })
             }
+            .navigationDestination(isPresented: $isFinised) {
+                testView() // 이 부분에 view넣으면 됨.
+            }
         }
+        .gesture(
+            DragGesture()
+                .onEnded { value in
+                    if value.translation.width < -40 {
+                        chageFlashCardView()
+                    }
+                }
+        )
+    }
+    
+    func chageFlashCardView() {
+        if dummyDataItemIndex + 1 < dummyDataList.count {
+            saveData()
+            dummyDataItemIndex += 1
+            dummyDataItem = dummyDataList[dummyDataItemIndex]
+            
+            progressPercent += 1.0/Float(dummyDataList.count)
+            progressPercent = min(progressPercent, 1.0)
+            
+        }
+        else {
+            isFinised = true
+        }
+    }
+    
+    func saveData() {
+        if textFieldText == dummyDataItem.meaning {
+            dummyDataItem.isCorrect = true
+        }
+        resultList.append(dummyDataItem)
+        textFieldText = ""
     }
 }
 
@@ -122,5 +173,5 @@ struct customProgressStyle: ProgressViewStyle {
 
 
 #Preview {
-    wordQuizView()
+    WordQuizView()
 }
