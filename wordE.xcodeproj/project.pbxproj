@@ -6,6 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXCopyFilesBuildPhase section */
+		820C248C2D52EC0000EE9687 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		6255D5BF2D52067A00CAD3E7 /* wordE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wordE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -79,6 +92,7 @@
 				6255D5BB2D52067A00CAD3E7 /* Sources */,
 				6255D5BC2D52067A00CAD3E7 /* Frameworks */,
 				6255D5BD2D52067A00CAD3E7 /* Resources */,
+				820C248C2D52EC0000EE9687 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
