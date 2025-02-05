@@ -6,15 +6,20 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ResultView: View {
     
-    let correct: Int
-    let wrong: Int
+    @Query var words: [wordDictionary]
     
-    private var total: Int { correct + wrong }
-    private var correctPercentage: Double {
-        total > 0 ? (Double(correct) / Double(total)) * 100 : 0
+//    // 정답 개수
+//    private var correctCount: Int {
+//        words.filter { $0.isCorrect }.count
+//    }
+    
+    // 오답 개수
+    private var wrongCount: Int {
+        words.count - correctCount
     }
     
     var body: some View {
@@ -117,7 +122,7 @@ struct CircularChartView: View {
             Circle()
                 .trim(from: 0, to: correctPercentage / 100) // 정답 퍼센트 만큼 자르기
                 .stroke(Color("graphColor"), style: StrokeStyle(lineWidth: 16, lineCap: .round))
-                .rotationEffect(.degrees(-90)) // 12시 방향에서 시작
+                .rotationEffect(.degrees(50))
         }
         .frame(width: 100, height: 100)
     }
