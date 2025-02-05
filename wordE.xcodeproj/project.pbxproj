@@ -6,65 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		820C24782D52EBFF00EE9687 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820C24772D52EBFF00EE9687 /* WidgetKit.framework */; };
-		820C247A2D52EBFF00EE9687 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820C24792D52EBFF00EE9687 /* SwiftUI.framework */; };
-		820C248B2D52EC0000EE9687 /* WordEWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 820C24752D52EBFF00EE9687 /* WordEWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		820C24892D52EC0000EE9687 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6255D5B72D52067A00CAD3E7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 820C24742D52EBFF00EE9687;
-			remoteInfo = WordEWidgetExtension;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		820C248C2D52EC0000EE9687 /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				820C248B2D52EC0000EE9687 /* WordEWidgetExtension.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		6255D5BF2D52067A00CAD3E7 /* wordE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wordE.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		820C24752D52EBFF00EE9687 /* WordEWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WordEWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		820C24772D52EBFF00EE9687 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
-		820C24792D52EBFF00EE9687 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		820C248F2D52EC0000EE9687 /* Exceptions for "WordEWidget" folder in "WordEWidgetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 820C24742D52EBFF00EE9687 /* WordEWidgetExtension */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6255D5C12D52067A00CAD3E7 /* wordE */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = wordE;
-			sourceTree = "<group>";
-		};
-		820C247B2D52EBFF00EE9687 /* WordEWidget */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				820C248F2D52EC0000EE9687 /* Exceptions for "WordEWidget" folder in "WordEWidgetExtension" target */,
-			);
-			path = WordEWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -77,15 +26,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		820C24722D52EBFF00EE9687 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				820C247A2D52EBFF00EE9687 /* SwiftUI.framework in Frameworks */,
-				820C24782D52EBFF00EE9687 /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -93,8 +33,6 @@
 			isa = PBXGroup;
 			children = (
 				6255D5C12D52067A00CAD3E7 /* wordE */,
-				820C247B2D52EBFF00EE9687 /* WordEWidget */,
-				820C24762D52EBFF00EE9687 /* Frameworks */,
 				6255D5C02D52067A00CAD3E7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,18 +41,8 @@
 			isa = PBXGroup;
 			children = (
 				6255D5BF2D52067A00CAD3E7 /* wordE.app */,
-				820C24752D52EBFF00EE9687 /* WordEWidgetExtension.appex */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		820C24762D52EBFF00EE9687 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				820C24772D52EBFF00EE9687 /* WidgetKit.framework */,
-				820C24792D52EBFF00EE9687 /* SwiftUI.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,12 +55,10 @@
 				6255D5BB2D52067A00CAD3E7 /* Sources */,
 				6255D5BC2D52067A00CAD3E7 /* Frameworks */,
 				6255D5BD2D52067A00CAD3E7 /* Resources */,
-				820C248C2D52EC0000EE9687 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				820C248A2D52EC0000EE9687 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				6255D5C12D52067A00CAD3E7 /* wordE */,
@@ -143,28 +69,6 @@
 			productName = wordE;
 			productReference = 6255D5BF2D52067A00CAD3E7 /* wordE.app */;
 			productType = "com.apple.product-type.application";
-		};
-		820C24742D52EBFF00EE9687 /* WordEWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 820C24902D52EC0000EE9687 /* Build configuration list for PBXNativeTarget "WordEWidgetExtension" */;
-			buildPhases = (
-				820C24712D52EBFF00EE9687 /* Sources */,
-				820C24722D52EBFF00EE9687 /* Frameworks */,
-				820C24732D52EBFF00EE9687 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				820C247B2D52EBFF00EE9687 /* WordEWidget */,
-			);
-			name = WordEWidgetExtension;
-			packageProductDependencies = (
-			);
-			productName = WordEWidgetExtension;
-			productReference = 820C24752D52EBFF00EE9687 /* WordEWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -177,9 +81,6 @@
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					6255D5BE2D52067A00CAD3E7 = {
-						CreatedOnToolsVersion = 16.2;
-					};
-					820C24742D52EBFF00EE9687 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
@@ -199,20 +100,12 @@
 			projectRoot = "";
 			targets = (
 				6255D5BE2D52067A00CAD3E7 /* wordE */,
-				820C24742D52EBFF00EE9687 /* WordEWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6255D5BD2D52067A00CAD3E7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		820C24732D52EBFF00EE9687 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -229,22 +122,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		820C24712D52EBFF00EE9687 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		820C248A2D52EC0000EE9687 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 820C24742D52EBFF00EE9687 /* WordEWidgetExtension */;
-			targetProxy = 820C24892D52EC0000EE9687 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6255D5CD2D52067C00CAD3E7 /* Debug */ = {
@@ -424,60 +302,6 @@
 			};
 			name = Release;
 		};
-		820C248D2D52EC0000EE9687 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59FP2PXRXK;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WordEWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = WordEWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.Team8.wordE.WordEWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		820C248E2D52EC0000EE9687 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59FP2PXRXK;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WordEWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = WordEWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.Team8.wordE.WordEWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -495,15 +319,6 @@
 			buildConfigurations = (
 				6255D5D02D52067C00CAD3E7 /* Debug */,
 				6255D5D12D52067C00CAD3E7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		820C24902D52EC0000EE9687 /* Build configuration list for PBXNativeTarget "WordEWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				820C248D2D52EC0000EE9687 /* Debug */,
-				820C248E2D52EC0000EE9687 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
