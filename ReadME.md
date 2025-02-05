@@ -20,9 +20,9 @@
 
 |프로필|이름|이메일|
 |:----:|:---:|:-----:|
-||이영학||
+|<img src="https://avatars.githubusercontent.com/ynghk?s=100"/>|이영학||
 |<img src="https://avatars.githubusercontent.com/whswls?s=100"/>|조은진|
-||고요한|
+|<img src="https://avatars.githubusercontent.com/yohns231?s=100"/>|고요한|
 
 ### 역할 분담
 
