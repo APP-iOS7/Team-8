@@ -14,7 +14,7 @@ struct ModelSelectView: View {
                 NavigationLink(destination: ContentView()) {
                     HStack {
                         Text("뒤집으러 가기")
-                            .font(.headline)
+                            .font(.system(size: 17))
                             .bold()
                         
                         Spacer()
@@ -22,15 +22,15 @@ struct ModelSelectView: View {
                         Image(systemName: "chevron.right")
                     }
                     .padding(.all)
-                    .foregroundStyle(.black.opacity(0.4))
+                    .foregroundStyle(Color("TextColor"))
                     .frame(height: 55)
-                    .background(Color.blue.opacity(0.2))
-                    .cornerRadius(10)
+                    .background(Color("ButtonBackgroundColor"))
+                    .cornerRadius(15)
                 }
                 NavigationLink(destination: ContentView()) {
                     HStack {
                         Text("북마크")
-                            .font(.headline)
+                            .font(.system(size: 17))
                             .bold()
                         
                         Spacer()
@@ -38,10 +38,10 @@ struct ModelSelectView: View {
                         Image(systemName: "chevron.right")
                     }
                     .padding(.all)
-                    .foregroundStyle(.black.opacity(0.4))
+                    .foregroundStyle(Color("TextColor"))
                     .frame(height: 55)
-                    .background(Color.blue.opacity(0.2))
-                    .cornerRadius(10)
+                    .background(Color("ButtonBackgroundColor"))
+                    .cornerRadius(15)
                 }
             }
             .padding(.horizontal, 42)

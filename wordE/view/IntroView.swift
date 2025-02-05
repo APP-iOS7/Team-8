@@ -87,7 +87,7 @@ struct IntroView: View {
                 Spacer()
                 
                 Text("화면을 눌러보세요!")
-                    .fontWeight(.medium)
+                    .font(.system(size: 15))
                     .frame(width: .infinity, height: .infinity, alignment: .bottom)
                     .padding(.bottom, 50)
             }
