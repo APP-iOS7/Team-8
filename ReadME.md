@@ -21,7 +21,7 @@
 |프로필|이름|이메일|
 |:----:|:---:|:-----:|
 ||이영학||
-||조은진|
+|<img src="https://avatars.githubusercontent.com/whswls?s=100"/>|조은진|
 ||고요한|
 
 ### 역할 분담
