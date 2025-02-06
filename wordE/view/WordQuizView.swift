@@ -61,6 +61,12 @@ struct WordQuizView: View {
                         .foregroundStyle(subTextColor)
                         .font(.system(size: 10))
                         .padding(.horizontal, 42)
+                    
+                    
+                    
+                    
+                    
+                      
                 }
                 .padding(.top)
                 

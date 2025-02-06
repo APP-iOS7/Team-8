@@ -8,129 +8,87 @@
 import SwiftUI
 
 struct IntroView: View {
-    @State private var isActive = false
+    @State private var isActive: Bool = false
+    @State private var isViewActive = true
+    
+    let tapGesture: some Gesture = TapGesture()
     
     var body: some View {
         NavigationStack {
-            VStack {
-                
-                Spacer()
-                
-                //카드 이미지
+            ScrollView {
                 VStack {
-                    HStack(spacing: -20) {
-                        Image("Fx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("Lx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("Ax1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("Sx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("Hx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
+                    
+                    Spacer()
+                    
+                    VStack {
+                        HStack(spacing: -20) {
+                            Image("Fx2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("Lx2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("Ax2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("Sx2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("Hx2").modifier(BounceImage(isViewActive: isViewActive))
+                        }
+                        HStack(spacing: -20) {
+                            Image("Cx2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("AAx2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("Rx2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("Dx2").modifier(BounceImage(isViewActive: isViewActive))
+                        }
+                        HStack(spacing: -20) {
+                            Image("wx2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("ox2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("rrx2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("ddx2").modifier(BounceImage(isViewActive: isViewActive))
+                            Image("Ex2").modifier(BounceImage(isViewActive: isViewActive))
+                        }
                     }
-                    HStack(spacing: -20) {
-                        Image("Cx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("AAx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("Rx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("Dx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                    }
-                    HStack(spacing: -20) {
-                        Image("wx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("ox1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("rrx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("ddx1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                        Image("Ex1")
-                            .resizable()
-                            .scaledToFit()
-                            .modifier(WiggleModifier())
-                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
                 }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.white)
-                
-                Spacer()
-                
-                Text("화면을 눌러보세요!")
-                    .font(.system(size: 15))
-                    .padding(.bottom, 50)
             }
+            .defaultScrollAnchor(.center)
+            .scrollDisabled(true)
             .contentShape(Rectangle())
             .onTapGesture {
                 isActive = true
             }
             .navigationDestination(isPresented: $isActive) {
                 ModelSelectView()
-                    .navigationBarBackButtonHidden(true)
             }
+            Text("화면을 눌러보세요!")
+                .font(.system(size: 15))
+                .padding(.bottom, 60)
+        }
+        .onAppear() {
+            isViewActive = false
+        }
+        .onDisappear() {
+            isViewActive = false
         }
     }
 }
-//흔들기 애니메이션
-struct WiggleModifier: ViewModifier {
-    @State private var isWiggling = false
-    
-    private var randomDuration: Double {
-        Double.random(in: 0.1...0.3)
-    }
-    
-    private var rotateAnimation: Animation {
-        Animation
-            .easeInOut(duration: randomDuration)
-            .repeatForever(autoreverses: true)
-    }
-    
-    private var bounceAnimation: Animation {
-        Animation
-            .easeInOut(duration: randomDuration)
-            .repeatForever(autoreverses: true)
-    }
+
+struct BounceImage: ViewModifier {
+    @State private var animation: Bool = false
+    let isViewActive: Bool
     
     func body(content: Content) -> some View {
         content
-            .rotationEffect(.degrees(isWiggling ? 2 : 0))
-            .animation(rotateAnimation, value: isWiggling)
-//            .offset(x: 0, y: isWiggling ? 2 : 0)
-            .animation(bounceAnimation, value: isWiggling)
-            .onAppear { isWiggling = true }
+            .offset(x: 0, y: animation ? 0 : CGFloat.random(in: -3 ... 7))
+            .animation(
+                .smooth(duration: 15, extraBounce: 10)
+                .speed(30)
+                .delay(Double.random(in: 0 ... 1))
+                .repeatForever(autoreverses: true),
+                value: animation && isViewActive)
+            .onAppear {
+                animation = true
+            }
     }
 }
+
+
 
 #Preview {
     IntroView()

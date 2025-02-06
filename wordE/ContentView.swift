@@ -11,6 +11,7 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [wordDictionary]
+    @State private var isIntroViewActive = false
 
     var body: some View {
         IntroView()
