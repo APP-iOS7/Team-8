@@ -105,7 +105,7 @@ struct WordQuizView: View {
             }
             
             .navigationDestination(isPresented: $isFinised) {
-                testView() // 이 부분에 view넣으면 됨.
+                ResultView(word: resultList)
             }
         }
         .gesture(
