@@ -8,7 +8,8 @@ import Foundation
 //"https://random-word-api.herokuapp.com/home"
 //"https://dictionaryapi.dev/"
 
-struct dummyData : Codable {
+struct dummyData : Codable, Identifiable {
+    var id: Int
     var word : String
     var meaning : String
     var imgPath : String

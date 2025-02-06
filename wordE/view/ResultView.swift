@@ -10,23 +10,25 @@ import SwiftData
 
 struct ResultView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query var words: [wordDictionary]
+    //@Query var words: [wordDictionary]
+    
+    var word: [dummyData]
     
     @State private var isBookmarked: Bool = false
     
     // 정답 개수
     private var correctCount: Int {
-        words.filter { $0.isCorrect }.count
+        word.filter { $0.isCorrect }.count
     }
     
     // 오답 개수
     private var wrongCount: Int {
-        words.count - correctCount
+        word.count - correctCount
     }
     
     // 정답 비율 (퍼센트)
     private var correctPercentage: Double {
-        words.isEmpty ? 0 : (Double(correctCount) / Double(words.count)) * 100
+        word.isEmpty ? 0 : (Double(correctCount) / Double(word.count)) * 100
     }
     
     var body: some View {
@@ -65,8 +67,8 @@ struct ResultView: View {
                 ScrollView {
                     VStack {
                         // 오답 단어 표시
-                        ForEach(words.filter { !$0.isCorrect }) { word in
-                            NavigationLink(destination: ContentView()) {
+                        ForEach(word.filter( { !$0.isCorrect })) { word in
+                            NavigationLink(destination: CardAnimationView()) {
                                 VStack {
                                     HStack {
                                         Text("\(word.word)")
@@ -83,7 +85,7 @@ struct ResultView: View {
                                                 .padding()
                                         }
                                     }
-                                    .frame(width: .infinity, height: 50)
+                                    .frame(width: 315, height: 50)
                                     .background(Color("sectionBackColor"))
                                     .overlay {
                                         RoundedRectangle(cornerRadius: 13).stroke(Color("sectionBorderColor"))
@@ -93,17 +95,17 @@ struct ResultView: View {
                         }
                         
                         Divider()
-                            .frame(width: .infinity, height: 25)
+                            .frame(width: 315, height: 25)
                             .foregroundStyle(Color("bookmarkColor"))
                         
                         // 정답 단어 표시
-                        ForEach(words.filter { $0.isCorrect }) { word in
-                            NavigationLink(destination: ContentView()) {
+                        ForEach(word.filter( { $0.isCorrect })) { word in
+                            NavigationLink(destination: CardAnimationView()) {
                                 VStack {
                                     HStack {
                                         Text("\(word.word)")
                                             .font(.system(size: 21, weight: .semibold))
-                                            .foregroundStyle(Color("xmarkColor"))
+                                            .foregroundStyle(Color("checkColor"))
                                             .padding()
                                         Spacer()
                                         // 북마크 버튼
@@ -115,7 +117,7 @@ struct ResultView: View {
                                                 .padding()
                                         }
                                     }
-                                    .frame(width: .infinity, height: 50)
+                                    .frame(width: 315, height: 50)
                                     .background(Color("sectionBackColor"))
                                     .overlay {
                                         RoundedRectangle(cornerRadius: 13).stroke(Color("sectionBorderColor"))
@@ -155,5 +157,5 @@ struct CircularChartView: View {
 }
 
 #Preview {
-    ResultView()
+    ResultView(word: [dummyData(id: 1, word: "apple", meaning: "사과", imgPath: "dddsd", isBookmarked: false, isCorrect: true)])
 }
