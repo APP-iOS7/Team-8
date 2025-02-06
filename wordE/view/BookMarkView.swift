@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct BookMarkView: View {
+    @Environment(\.modelContext) private var modelContext
     @Query var words: [wordDictionary]
     @State private var sortOrder: SortOrder = .ascending
     @State private var isBookmarked: Bool = false
@@ -45,21 +46,21 @@ struct BookMarkView: View {
             Spacer()
             ScrollView {
                 VStack {
-                    ForEach(words.filter { !$0.isCorrect }) { word in
-                        NavigationLink(destination: ContentView(/*word: word*/)) {
+                    ForEach(words) { word in
+                        NavigationLink(destination: CardAnimationView()) {
                             VStack {
                                 HStack {
                                     Text("\(word.word)")
                                         .font(.system(size: 21, weight: .semibold))
-                                        .foregroundStyle(Color("xmarkColor"))
+                                        .foregroundStyle(Color.black)
                                         .padding()
                                     Spacer()
                                     // 북마크 버튼
                                     Button(action: {
-                                        isBookmarked.toggle()
+                                        toggleBookmark(for: word)
                                     }) {
-                                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
-                                            .foregroundStyle(isBookmarked ? Color("bookmarkColor") : .gray)
+                                        Image(systemName: word.isBookmarked ? "bookmark.fill" : "bookmark")
+                                            .foregroundStyle(word.isBookmarked ? Color("bookmarkColor") : .gray)
                                             .padding()
                                     }
                                 }
@@ -75,6 +76,13 @@ struct BookMarkView: View {
             }
         }
         Spacer()
+    }
+    private func toggleBookmark(for word: wordDictionary) {
+        // 북마크 상태 토글
+        word.isBookmarked.toggle()
+        
+        let wordDictionary = wordDictionary(id: word.id, word: word.word, meaning: word.meaning, imgPath: word.imgPath, isCorrect: word.isCorrect, isBookmarked: !word.isBookmarked)
+        modelContext.insert(wordDictionary)
     }
 }
 
