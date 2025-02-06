@@ -61,7 +61,7 @@ struct IntroView: View {
                 .padding(.bottom, 60)
         }
         .onAppear() {
-            isViewActive = false
+            isViewActive = true
         }
         .onDisappear() {
             isViewActive = false
