@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct IntroView: View {
-    @State private var isShaking = false
     @State private var isActive = false
     
     var body: some View {
         NavigationStack {
             VStack {
+                
                 Spacer()
                 
+                //카드 이미지
                 VStack {
                     HStack(spacing: -20) {
                         Image("Fx1")
@@ -88,7 +89,6 @@ struct IntroView: View {
                 
                 Text("화면을 눌러보세요!")
                     .font(.system(size: 15))
-                    .frame(width: .infinity, height: .infinity, alignment: .bottom)
                     .padding(.bottom, 50)
             }
             .contentShape(Rectangle())
@@ -102,7 +102,7 @@ struct IntroView: View {
         }
     }
 }
-
+//흔들기 애니메이션
 struct WiggleModifier: ViewModifier {
     @State private var isWiggling = false
     
@@ -124,9 +124,9 @@ struct WiggleModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .rotationEffect(.degrees(isWiggling ? 2.0 : 0))
+            .rotationEffect(.degrees(isWiggling ? 2 : 0))
             .animation(rotateAnimation, value: isWiggling)
-            .offset(x: 0, y: isWiggling ? 2.0 : 0)
+//            .offset(x: 0, y: isWiggling ? 2 : 0)
             .animation(bounceAnimation, value: isWiggling)
             .onAppear { isWiggling = true }
     }

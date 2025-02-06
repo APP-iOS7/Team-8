@@ -10,7 +10,7 @@ struct FlashCardView: View {
     private var wordTextColor: Color = Color(.black)
     
     //이 부분은 나중에 contents에 연결할 때 instance로 넣어줄 예정
-//    private let wordList: [dummyData]
+    //    private let wordList: [dummyData]
     
     private var wordInfo: dummyData
     private var image: String
@@ -62,6 +62,7 @@ struct FlashCardView: View {
         .background(primarySemiColor)
         .frame(minHeight:400, maxHeight: 400)
         .cornerRadius(15)
+        .padding(42)
     }
 }
 

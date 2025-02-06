@@ -23,16 +23,6 @@
 		6255D5BF2D52067A00CAD3E7 /* wordE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wordE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		6255D5E82D52273200CAD3E7 /* Exceptions for "wordE" folder in "wordE" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				model/wordDictionary.swift,
-			);
-			target = 6255D5BE2D52067A00CAD3E7 /* wordE */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 		6255D5E92D52273200CAD3E7 /* Exceptions for "wordE" folder in "Copy Bundle Resources" phase from "wordE" target */ = {
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
@@ -47,7 +37,6 @@
 		6255D5C12D52067A00CAD3E7 /* wordE */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				6255D5E82D52273200CAD3E7 /* Exceptions for "wordE" folder in "wordE" target */,
 				6255D5E92D52273200CAD3E7 /* Exceptions for "wordE" folder in "Copy Bundle Resources" phase from "wordE" target */,
 			);
 			path = wordE;

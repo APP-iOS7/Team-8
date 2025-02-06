@@ -13,7 +13,7 @@ final class wordDictionary {
     var isCorrect: Bool
     var isBookmarked: Bool
     
-    init(word: word, meaning: meaning, imgPath: imgPath, isCorrect: isCorrect, isBookmarked: Bool = false) {
+    init(word: String, meaning: String, imgPath: String, isCorrect: Bool, isBookmarked: Bool = false) {
         self.word = word
         self.meaning = meaning
         self.imgPath = imgPath

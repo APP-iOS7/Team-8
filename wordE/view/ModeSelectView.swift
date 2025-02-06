@@ -11,7 +11,7 @@ struct ModelSelectView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 30) {
-                NavigationLink(destination: ContentView()) {
+                NavigationLink(destination: WordQuizView()) {
                     HStack {
                         Text("뒤집으러 가기")
                             .font(.system(size: 17))

@@ -22,7 +22,6 @@ extension Color {
 }
 
 struct WordQuizView: View {
-    @Environment(\.dismiss) var dismiss
     
     
     private var primaryColor: Color = Color(hex:" #5AA0C8")
@@ -56,13 +55,14 @@ struct WordQuizView: View {
                 VStack(alignment: .trailing) {
                     ProgressView(value: progressPercent, total: 1)
                         .progressViewStyle(customProgressStyle())
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 42)
                     Text("\(progressPercent * 100, specifier: "%.0f")%")
                         .foregroundStyle(subTextColor)
                         .font(.system(size: 10))
+                        .padding(.horizontal, 42)
                 }
-                .padding(0)
-                
-                Spacer()
+                .padding(.top)
                 
                 //FlashCardView
                 FlashCardView(wordInfo: dummyDataItem)
@@ -73,7 +73,7 @@ struct WordQuizView: View {
                 VStack(alignment: .leading) {
                     Text("단어를 맞춰보세요!")
                         .frame(width: 200, height: 26, alignment: .leading)
-                        .padding(.bottom, 10)
+                        .padding(.leading, 50)
                         .foregroundStyle(subTextColor)
                         .font(.system(size: 15))
                     
@@ -86,25 +86,17 @@ struct WordQuizView: View {
                                     .stroke(textFieldBorderColor, lineWidth: 1)
                             )
                         Button("", systemImage: textFieldButtonSymbol) {
-                            chageFlashCardView()
+                            changeFlashCardView()
                         }
                         .foregroundStyle(primaryColor)
                         .frame(width: 18, height: 18)
                         .padding(.trailing, 10)
                     }
-                    
+                    .padding([.leading, .trailing], 42)
                 }
                 Spacer()
             }
-            .padding([.leading, .trailing], 42)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading, content: {
-                    Button("", systemImage: backButtonSymbol){
-                        dismiss()
-                    }
-                    .tint(backButtonColor)
-                })
-            }
+            
             .navigationDestination(isPresented: $isFinised) {
                 testView() // 이 부분에 view넣으면 됨.
             }
@@ -113,13 +105,13 @@ struct WordQuizView: View {
             DragGesture()
                 .onEnded { value in
                     if value.translation.width < -40 {
-                        chageFlashCardView()
+                        changeFlashCardView()
                     }
                 }
         )
     }
     
-    func chageFlashCardView() {
+    func changeFlashCardView() {
         if dummyDataItemIndex + 1 < dummyDataList.count {
             saveData()
             dummyDataItemIndex += 1

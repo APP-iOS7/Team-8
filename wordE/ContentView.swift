@@ -10,15 +10,15 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query private var items: [wordDictionary]
 
     var body: some View {
-        WordQuizView()
+        IntroView()
     }
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(timestamp: Date())
+            let newItem = wordDictionary(word: String(), meaning: String(), imgPath: String(), isCorrect: Bool(), isBookmarked: Bool())
             modelContext.insert(newItem)
         }
     }
@@ -34,5 +34,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .modelContainer(for: wordDictionary.self, inMemory: true)
 }
