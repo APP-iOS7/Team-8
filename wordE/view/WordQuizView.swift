@@ -113,15 +113,16 @@ struct WordQuizView: View {
             .navigationDestination(isPresented: $isFinised) {
                 ResultView(word: resultList)
             }
-        }
-        .gesture(
-            DragGesture()
-                .onEnded { value in
-                    if value.translation.width < -40 {
-                        changeFlashCardView()
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if value.translation.width < -40 {
+                            changeFlashCardView()
+                        }
                     }
-                }
-        )
+            )
+        }
     }
     
     func changeFlashCardView() {
