@@ -39,10 +39,6 @@ struct FlashCardView: View {
                             .scaledToFit()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 270, height: 210) //1:0.78
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 13)
-                                    .stroke(imageBorderColor, lineWidth: 1)
-                            )
                             .padding([.top, .leading, .trailing], (geometry.size.width - 270)/2)
                         Spacer()
                         Text("\(word)")

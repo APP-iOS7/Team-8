@@ -77,22 +77,29 @@ struct WordQuizView: View {
                         .foregroundStyle(subTextColor)
                         .font(.system(size: 15))
                     
-                    ZStack(alignment: .trailing) {
-                        TextField("", text: $textFieldText)
-                            .frame(height:49)
-                            .cornerRadius(10)
+                    ZStack() {
+                        Section {
+                            HStack {
+                                Spacer()
+                                TextField("", text: $textFieldText)
+                                    .frame(width: 215, height: 49)
+                                    .padding(.horizontal, 10)
+
+                                Button("", systemImage: textFieldButtonSymbol) {
+                                    changeFlashCardView()
+                                }
+                                .frame(width: 40, height: 49, alignment: .trailing)
+                                .foregroundStyle(primaryColor)
+                                Spacer()
+                            }
+                            .frame(width: 300, height: 49)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 13)
                                     .stroke(textFieldBorderColor, lineWidth: 1)
                             )
-                        Button("", systemImage: textFieldButtonSymbol) {
-                            changeFlashCardView()
                         }
-                        .foregroundStyle(primaryColor)
-                        .frame(width: 18, height: 18)
-                        .padding(.trailing, 10)
                     }
-                    .padding([.leading, .trailing], 42)
+                    .padding(.horizontal, 42)
                 }
                 Spacer()
             }
