@@ -50,68 +50,69 @@ struct WordQuizView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                //progressView
-                VStack(alignment: .trailing) {
-                    ProgressView(value: progressPercent, total: 1)
-                        .progressViewStyle(customProgressStyle())
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 42)
-                    Text("\(progressPercent * 100, specifier: "%.0f")%")
-                        .foregroundStyle(subTextColor)
-                        .font(.system(size: 10))
-                        .padding(.horizontal, 42)
-                }
-                .padding(.top)
-                
-                //FlashCardView
-                if wordItemsToState != [] {
-                    CardAnimationView(wordInfo: wordItemsToState[dataIndex])
-                }
-                else {
-                    CardAnimationView(wordInfo: dummyItems)
-                }
-                Spacer()
-                
-                // TextField
-                VStack(alignment: .leading) {
-                    Text("단어를 맞춰보세요!")
-                        .frame(width: 200, height: 26, alignment: .leading)
-                        .padding(.leading, 50)
-                        .foregroundStyle(subTextColor)
-                        .font(.system(size: 15))
-                    
-                    ZStack() {
-                        Section {
-                            HStack {
-                                Spacer()
-                                TextField("", text: $textFieldText)
-                                    .frame(width: 215, height: 49)
-                                    .padding(.horizontal, 10)
-                                    .focused($isFocused)
-
-                                Button("", systemImage: textFieldButtonSymbol) {
-                                    changeFlashCardView()
-                                }
-                                .frame(width: 40, height: 49, alignment: .trailing)
-                                .foregroundStyle(primaryColor)
-                                Spacer()
-                            }
-                            .frame(width: 300, height: 49)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 13)
-                                    .stroke(textFieldBorderColor, lineWidth: 1)
-                            )
-                        }
+            ScrollView{
+                VStack {
+                    //progressView
+                    VStack(alignment: .trailing) {
+                        ProgressView(value: progressPercent, total: 1)
+                            .progressViewStyle(customProgressStyle())
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 42)
+                        Text("\(progressPercent * 100, specifier: "%.0f")%")
+                            .foregroundStyle(subTextColor)
+                            .font(.system(size: 10))
+                            .padding(.horizontal, 42)
                     }
-                    .padding(.horizontal, 42)
+                    .padding(.top)
+                    
+                    //FlashCardView
+                    if wordItemsToState != [] {
+                        CardAnimationView(wordInfo: wordItemsToState[dataIndex])
+                    }
+                    else {
+                        CardAnimationView(wordInfo: dummyItems)
+                    }
+                    Spacer()
+                    
+                    // TextField
+                    VStack(alignment: .leading) {
+                        Text("단어를 맞춰보세요!")
+                            .frame(width: 200, height: 26, alignment: .leading)
+                            .padding(.leading, 50)
+                            .foregroundStyle(subTextColor)
+                            .font(.system(size: 15))
+                        
+                        ZStack() {
+                            Section {
+                                HStack {
+                                    Spacer()
+                                    TextField("", text: $textFieldText)
+                                        .frame(width: 215, height: 49)
+                                        .padding(.horizontal, 10)
+                                        .focused($isFocused)
+                                    
+                                    Button("", systemImage: textFieldButtonSymbol) {
+                                        changeFlashCardView()
+                                    }
+                                    .frame(width: 40, height: 49, alignment: .trailing)
+                                    .foregroundStyle(primaryColor)
+                                    Spacer()
+                                }
+                                .frame(width: 300, height: 49)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 13)
+                                        .stroke(textFieldBorderColor, lineWidth: 1)
+                                )
+                            }
+                        }
+                        .padding(.horizontal, 42)
+                    }
+                    Spacer()
                 }
-                Spacer()
-            }
-            
-            .navigationDestination(isPresented: $isFinised) {
-                ResultView()
-//                testView()
+                
+                .navigationDestination(isPresented: $isFinised) {
+                    ResultView()
+                }
             }
             .onAppear {
                 if wordItems.isEmpty {
@@ -121,8 +122,8 @@ struct WordQuizView: View {
                 wordItemsToState = wordItems
                 wordItemsToState.shuffle()
                 progressPercent = 1 / Float(max(wordItems.count, 1))
-            
             }
+            .scrollDisabled(!isFocused)
         }
         .contentShape(Rectangle())
         .gesture(
@@ -168,10 +169,6 @@ struct WordQuizView: View {
     func changeFlashCardView() {
         if dataIndex + 1 < wordItems.count {
             saveData()
-            dataIndex += 1
-            progressPercent += 1.0/Float(wordItems.count)
-            progressPercent = min(progressPercent, 1.0)
-            
         }
         else {
             isFinised = true
@@ -180,17 +177,20 @@ struct WordQuizView: View {
     
     func saveData() {
         if textFieldText == wordItemsToState[dataIndex].meaning {
-            if let index = wordItemsToState.firstIndex(where: {$0.word == wordItems[dataIndex].word}) {
+            if let index = wordItems.firstIndex(where: {$0.word == wordItemsToState[dataIndex].word}) {
                 wordItems[index].isCorrect = true
                 try? modelContext.save()
             }
         }
         else {
-            if let index = wordItemsToState.firstIndex(where: {$0.word == wordItems[dataIndex].word}) {
+            if let index = wordItems.firstIndex(where: {$0.word == wordItemsToState[dataIndex].word}) {
                 wordItems[index].isCorrect = false
                 try? modelContext.save()
             }
         }
+        dataIndex += 1
+        progressPercent += 1.0/Float(wordItems.count)
+        progressPercent = min(progressPercent, 1.0)
         textFieldText = ""
     }
 }

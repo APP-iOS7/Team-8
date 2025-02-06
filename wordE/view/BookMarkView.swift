@@ -24,8 +24,7 @@ struct BookMarkView: View {
     }
     
     var body: some View {
-        VStack {
-            Spacer()
+        VStack(alignment: .leading) {
             VStack {
                 Picker("정렬", selection: $sortOrder) {
                     Text("오름차순").tag(SortOrder.ascending)
@@ -40,14 +39,11 @@ struct BookMarkView: View {
                     RoundedRectangle(cornerRadius: 13)
                         .stroke(Color("sectionBorderColor"), lineWidth: 1)
                 }
-                Spacer()
             }
-            .offset(x: -70, y: 90)
-            
-            Spacer()
+
             ScrollView {
                 VStack {
-                    ForEach(words) { word in
+                    ForEach(sortedWords) { word in
                         NavigationLink(destination: CardAnimationView(wordInfo: word)) {
                             VStack {
                                 HStack {
@@ -58,7 +54,7 @@ struct BookMarkView: View {
                                     Spacer()
                                     // 북마크 버튼
                                     Button(action: {
-                                        toggleBookmark(for: word)
+                                        clickedBookmark(item: word)
                                     }) {
                                         Image(systemName: word.isBookmarked ? "bookmark.fill" : "bookmark")
                                             .foregroundStyle(word.isBookmarked ? Color("bookmarkColor") : .gray)
@@ -78,12 +74,11 @@ struct BookMarkView: View {
         }
         Spacer()
     }
-    private func toggleBookmark(for word: wordDictionary) {
-        // 북마크 상태 토글
-        word.isBookmarked.toggle()
-        
-        let wordDictionary = wordDictionary(id: word.id, word: word.word, meaning: word.meaning, imgPath: word.imgPath, isCorrect: word.isCorrect, isBookmarked: !word.isBookmarked)
-        modelContext.insert(wordDictionary)
+    private func clickedBookmark(item: wordDictionary) {
+        if let index = words.firstIndex(where: { $0.id == item.id }) {
+            words[index].isBookmarked = !words[index].isBookmarked
+            try? modelContext.save()
+        }
     }
 }
 

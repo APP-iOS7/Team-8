@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-//카드 외형 요한님 코드로 바꿔줘야 함
 struct CardBack : View {
     let width : CGFloat
     let height : CGFloat
@@ -58,7 +57,6 @@ struct CardBack : View {
     }
 }
 
-//카드 외형 요한님 코드로 바꿔줘야 함
 struct CardFront : View {
     let width : CGFloat
     let height : CGFloat
@@ -140,6 +138,15 @@ struct CardAnimationView: View {
         }.onTapGesture {
             flipCard ()
         }
+        .onChange(of: wordInfo) { _, _ in
+            resetCard()
+        }
+    }
+    
+    func resetCard() {
+        backDegree = 0.0
+        frontDegree = -90.0
+        isFlipped = false
     }
 }
 

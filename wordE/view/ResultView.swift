@@ -27,10 +27,6 @@ struct ResultView: View {
         words.isEmpty ? 0 : (Double(correctCount) / Double(words.count)) * 100
     }
     
-    private var fillteredWord: [wordDictionary] {
-        return []
-    }
-    
     
     
     var body: some View {
@@ -46,6 +42,7 @@ struct ResultView: View {
                             
                             Text("정답 수: \(correctCount)")
                                 .font(.system(size: 20, weight: .semibold))
+                                .frame(minWidth: 90)
                                 .foregroundStyle(Color("resultFontColor"))
                         }
                         HStack {
@@ -54,6 +51,7 @@ struct ResultView: View {
                                 .foregroundStyle(Color("xmarkColor"))
                             Text("오답 수: \(wrongCount)")
                                 .font(.system(size: 20, weight: .semibold))
+                                .frame(minWidth: 90)
                                 .foregroundStyle(Color("resultFontColor"))
                         }
                     }
@@ -68,8 +66,8 @@ struct ResultView: View {
                 
                 ScrollView {
                     VStack {
-//                         오답 단어 표시
-                        ForEach(fillteredWord) { word in
+                        // 오답 단어 표시
+                        ForEach(words.filter( { !$0.isCorrect })) { word in
                             NavigationLink(destination: CardAnimationView(wordInfo: word)) {
                                 VStack {
                                     HStack {
@@ -101,7 +99,7 @@ struct ResultView: View {
                             .foregroundStyle(Color("bookmarkColor"))
                         
                         // 정답 단어 표시
-                        ForEach(fillteredWord) { word in
+                        ForEach(words.filter( { $0.isCorrect })) { word in
                             NavigationLink(destination: CardAnimationView(wordInfo: word)) {
                                 VStack {
                                     HStack {
@@ -128,12 +126,8 @@ struct ResultView: View {
                             }
                         }
                     }
-                    
                 }
-            }.padding(.horizontal, 42)  // 좌우 여백
-                .onAppear(perform: {
-                    print(words)
-                        })
+            }.padding(.horizontal, 42)
         }
         Spacer()
     }
@@ -141,12 +135,9 @@ struct ResultView: View {
     private func clickedBookmark(item: wordDictionary) {
         if let index = words.firstIndex(where: { $0.id == item.id }) {
             words[index].isBookmarked = !words[index].isBookmarked
-//            words[index].isBookmarked.toggle()
             try? modelContext.save()
-            print(words[index])
         }
     }
-    
 }
 
 struct CircularChartView: View {
@@ -164,9 +155,10 @@ struct CircularChartView: View {
             
             // 정답 퍼센트 원형 차트
             Circle()
-                .trim(from: 0, to: correctPercentage / 100) // 정답 퍼센트 만큼 자르기
+                .trim(from: 0, to: correctPercentage / 100)
                 .stroke(Color("graphColor"), style: StrokeStyle(lineWidth: 16, lineCap: .round))
-                .rotationEffect(.degrees(50))
+                .rotationEffect(.degrees(-90))
+                .scaleEffect(x: -1, y: 1)
         }
         .frame(width: 100, height: 100)
     }
