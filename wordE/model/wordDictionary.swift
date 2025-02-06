@@ -7,14 +7,14 @@ import SwiftData
 
 @Model
 final class wordDictionary {
-    var id: Int
+    var id: UUID
     var word: String
     var meaning: String
     var imgPath: String
     var isCorrect: Bool
     var isBookmarked: Bool
     
-    init(id: Int, word: String, meaning: String, imgPath: String, isCorrect: Bool, isBookmarked: Bool = false) {
+    init(id: UUID, word: String, meaning: String, imgPath: String, isCorrect: Bool = false, isBookmarked: Bool = false) {
         self.id = id
         self.word = word
         self.meaning = meaning

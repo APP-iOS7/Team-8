@@ -16,11 +16,11 @@ struct CardBack : View {
     private var primarySemiColor: Color = Color(hex: "F3F9FC")
     private var imageBorderColor: Color = Color(hex: "B7A1A1")
     private var wordTextColor: Color = Color(.black)
-    private var wordInfo: dummyData
+    private var wordInfo: wordDictionary
     private var image: String
     private var word: String
     
-    init(width: CGFloat, height: CGFloat, degree: Binding<Double>, wordInfo: dummyData = loadJsonData(filename: "dummyWordData")[0]) {
+    init(width: CGFloat, height: CGFloat, degree: Binding<Double>, wordInfo: wordDictionary) {
         self.width = width
         self.height = height
         self._degree = degree
@@ -66,10 +66,10 @@ struct CardFront : View {
     
     private var primarySemiColor: Color = Color(hex: "F3F9FC")
     private var wordTextColor: Color = Color(.black)
-    private var wordInfo: dummyData
+    private var wordInfo: wordDictionary
     private var meaning: String
     
-    init(width: CGFloat, height: CGFloat, degree: Binding<Double>, wordInfo: dummyData = loadJsonData(filename: "dummyWordData")[0]) {
+    init(width: CGFloat, height: CGFloat, degree: Binding<Double>, wordInfo: wordDictionary) {
         self.width = width
         self.height = height
         self._degree = degree
@@ -107,6 +107,12 @@ struct CardAnimationView: View {
     let width : CGFloat = 200
     let height : CGFloat = 250
     let durationAndDelay : CGFloat = 0.3
+    
+    let wordInfo : wordDictionary
+    
+    init(wordInfo : wordDictionary) {
+        self.wordInfo = wordInfo
+    }
 
     func flipCard () {
         isFlipped = !isFlipped
@@ -129,8 +135,8 @@ struct CardAnimationView: View {
     
     var body: some View {
         ZStack {
-            CardFront(width: width, height: height, degree: $frontDegree)
-            CardBack(width: width, height: height, degree: $backDegree)
+            CardFront(width: width, height: height, degree: $frontDegree, wordInfo: wordInfo)
+            CardBack(width: width, height: height, degree: $backDegree, wordInfo: wordInfo)
         }.onTapGesture {
             flipCard ()
         }
@@ -138,5 +144,5 @@ struct CardAnimationView: View {
 }
 
 #Preview {
-    CardAnimationView()
+    CardAnimationView(wordInfo: wordDictionary(id: UUID(), word: "Apple", meaning: "사과", imgPath: "appleImage", isCorrect: false, isBookmarked: false))
 }

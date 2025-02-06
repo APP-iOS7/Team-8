@@ -17,9 +17,10 @@ struct BookMarkView: View {
     var sortedWords: [wordDictionary] {
         // 북마크된 단어들만 추출
         let bookmarkedWords = words.filter { $0.isBookmarked }
-        return bookmarkedWords.sorted {
+        let sortedBookmarkedWords = bookmarkedWords.sorted {
             sortOrder == .ascending ? $0.word < $1.word : $0.word > $1.word
         }
+        return sortedBookmarkedWords
     }
     
     var body: some View {
@@ -47,7 +48,7 @@ struct BookMarkView: View {
             ScrollView {
                 VStack {
                     ForEach(words) { word in
-                        NavigationLink(destination: CardAnimationView()) {
+                        NavigationLink(destination: CardAnimationView(wordInfo: word)) {
                             VStack {
                                 HStack {
                                     Text("\(word.word)")

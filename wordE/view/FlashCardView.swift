@@ -5,20 +5,21 @@
 import SwiftUI
 
 struct FlashCardView: View {
+    //Color
     private var primarySemiColor: Color = Color(hex: "F3F9FC")
     private var imageBorderColor: Color = Color(hex: "B7A1A1")
     private var wordTextColor: Color = Color(.black)
     
-    //이 부분은 나중에 contents에 연결할 때 instance로 넣어줄 예정
-    //    private let wordList: [dummyData]
+    //SwiftData
+    private var wordInfo: wordDictionary
+    private var dummyItems: wordDictionary = wordDictionary(id: UUID(), word: "Apple", meaning: "사과", imgPath: "appleImage", isCorrect: false, isBookmarked: false)
     
-    private var wordInfo: dummyData
     private var image: String
     private var word: String
     private var meaning: String
     @State private var isFlapped: Bool
     
-    init(wordInfo: dummyData = loadJsonData(filename: "dummyWordData")[0]) {
+    init(wordInfo: wordDictionary) {
         self.wordInfo = wordInfo
         self.image = wordInfo.imgPath
         self.word = wordInfo.word
@@ -62,6 +63,6 @@ struct FlashCardView: View {
     }
 }
 
-#Preview {
-    FlashCardView()
-}
+//#Preview {
+//    FlashCardView()
+//}

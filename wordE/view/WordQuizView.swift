@@ -3,6 +3,8 @@
 //Content: Draft UI
 
 import SwiftUI
+import SwiftData
+import Foundation
 
 extension Color {
     init(hex: String) {
@@ -22,31 +24,29 @@ extension Color {
 }
 
 struct WordQuizView: View {
+    //SwiftData
+    @Environment(\.modelContext) private var modelContext
+    @Query private var wordItems: [wordDictionary]
+    @State private var wordItemsToState: [wordDictionary] = []
+    private var dummyItems: wordDictionary = wordDictionary(id: UUID(), word: "Apple", meaning: "사과", imgPath: "appleImage", isCorrect: false, isBookmarked: false)
     
-    
+    //Color
     private var primaryColor: Color = Color(hex:" #5AA0C8")
     private var backButtonColor: Color = Color(.black)
     private var subTextColor: Color = Color(hex: "#8A8787")
     private var textFieldBorderColor: Color = Color(hex: "#C7DBE7")
     
+    //Symbol
     private var backButtonSymbol: String = "chevron.left"
     private var textFieldButtonSymbol: String = "arrow.right.circle"
     
-
+    //State
     @State private var progressPercent: Float = 0.0
-    @State private var dummyDataList: [dummyData]
-    @State private var dummyDataItem: dummyData
-    @State private var dummyDataItemIndex: Int = 0
+    @State private var dataIndex: Int = 0
     @State private var textFieldText: String = ""
-    @State var resultList: [dummyData] = []
     @State private var isFinised: Bool = false
+    @FocusState private var isFocused: Bool
     
-    init() {
-        let loadedData: [dummyData] = loadJsonData(filename: "dummyWordData").shuffled()
-        self.dummyDataList = loadedData
-        self.dummyDataItem = loadedData[0]
-        self._progressPercent = State(initialValue: 1 / Float(dummyDataList.count))
-    }
     
     var body: some View {
         NavigationStack {
@@ -61,18 +61,16 @@ struct WordQuizView: View {
                         .foregroundStyle(subTextColor)
                         .font(.system(size: 10))
                         .padding(.horizontal, 42)
-                    
-                    
-                    
-                    
-                    
-                      
                 }
                 .padding(.top)
                 
                 //FlashCardView
-                FlashCardView(wordInfo: dummyDataItem)
-                
+                if wordItemsToState != [] {
+                    CardAnimationView(wordInfo: wordItemsToState[dataIndex])
+                }
+                else {
+                    CardAnimationView(wordInfo: dummyItems)
+                }
                 Spacer()
                 
                 // TextField
@@ -90,6 +88,7 @@ struct WordQuizView: View {
                                 TextField("", text: $textFieldText)
                                     .frame(width: 215, height: 49)
                                     .padding(.horizontal, 10)
+                                    .focused($isFocused)
 
                                 Button("", systemImage: textFieldButtonSymbol) {
                                     changeFlashCardView()
@@ -111,27 +110,66 @@ struct WordQuizView: View {
             }
             
             .navigationDestination(isPresented: $isFinised) {
-                ResultView(word: resultList)
+                ResultView()
+//                testView()
             }
-            .contentShape(Rectangle())
-            .gesture(
-                DragGesture()
-                    .onEnded { value in
-                        if value.translation.width < -40 {
-                            changeFlashCardView()
-                        }
+            .onAppear {
+                if wordItems.isEmpty {
+                    let loadedData: [decodeData] = loadJsonData(filename: "dummyWordData").shuffled()
+                    saveWordToSwiftData(decodeDatas: loadedData)
+                }
+                wordItemsToState = wordItems
+                wordItemsToState.shuffle()
+                progressPercent = 1 / Float(max(wordItems.count, 1))
+            
+            }
+        }
+        .contentShape(Rectangle())
+        .gesture(
+            TapGesture()
+                .onEnded { _ in
+                    isFocused = false
+                }
+        )
+        .simultaneousGesture(
+            DragGesture()
+                .onEnded { value in
+                    if value.translation.width < -40 {
+                        changeFlashCardView()
                     }
+                }
+        )
+    }
+    
+    
+    func insertSwiftData(comparaWordInfo: wordDictionary) {
+        let isContain = wordItems.contains { $0.word == comparaWordInfo.word }
+        if !isContain {
+            wordItemsToState.append(comparaWordInfo)
+            modelContext.insert(comparaWordInfo)
+            try? modelContext.save()
+        }
+    }
+    
+    func saveWordToSwiftData(decodeDatas: [decodeData]) {
+        for decodeData in decodeDatas {
+            let wordModelItem = wordDictionary(
+                id: UUID(),
+                word: decodeData.word,
+                meaning: decodeData.meaning,
+                imgPath: decodeData.imgPath,
+                isCorrect: false,
+                isBookmarked: false
             )
+            insertSwiftData(comparaWordInfo: wordModelItem)
         }
     }
     
     func changeFlashCardView() {
-        if dummyDataItemIndex + 1 < dummyDataList.count {
+        if dataIndex + 1 < wordItems.count {
             saveData()
-            dummyDataItemIndex += 1
-            dummyDataItem = dummyDataList[dummyDataItemIndex]
-            
-            progressPercent += 1.0/Float(dummyDataList.count)
+            dataIndex += 1
+            progressPercent += 1.0/Float(wordItems.count)
             progressPercent = min(progressPercent, 1.0)
             
         }
@@ -141,12 +179,29 @@ struct WordQuizView: View {
     }
     
     func saveData() {
-        if textFieldText == dummyDataItem.meaning {
-            dummyDataItem.isCorrect = true
+        if textFieldText == wordItemsToState[dataIndex].meaning {
+            if let index = wordItemsToState.firstIndex(where: {$0.word == wordItems[dataIndex].word}) {
+                wordItems[index].isCorrect = true
+                try? modelContext.save()
+            }
         }
-        resultList.append(dummyDataItem)
+        else {
+            if let index = wordItemsToState.firstIndex(where: {$0.word == wordItems[dataIndex].word}) {
+                wordItems[index].isCorrect = false
+                try? modelContext.save()
+            }
+        }
         textFieldText = ""
     }
+}
+
+struct wordData : Codable, Identifiable {
+    var id: UUID = UUID()
+    var word : String
+    var meaning : String
+    var imgPath : String
+    var isBookmarked : Bool
+    var isCorrect : Bool
 }
 
 

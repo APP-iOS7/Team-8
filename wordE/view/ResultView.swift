@@ -12,24 +12,26 @@ struct ResultView: View {
     @Environment(\.modelContext) private var modelContext
     @Query var words: [wordDictionary]
     
-    var word: [dummyData]
-    
-    @State private var wordList : [dummyData] = []
-    
     // 정답 개수
     private var correctCount: Int {
-        word.filter { $0.isCorrect }.count
+        words.filter { $0.isCorrect }.count
     }
     
     // 오답 개수
     private var wrongCount: Int {
-        word.count - correctCount
+        words.count - correctCount
     }
     
     // 정답 비율 (퍼센트)
     private var correctPercentage: Double {
-        word.isEmpty ? 0 : (Double(correctCount) / Double(word.count)) * 100
+        words.isEmpty ? 0 : (Double(correctCount) / Double(words.count)) * 100
     }
+    
+    private var fillteredWord: [wordDictionary] {
+        return []
+    }
+    
+    
     
     var body: some View {
         NavigationView {
@@ -66,9 +68,9 @@ struct ResultView: View {
                 
                 ScrollView {
                     VStack {
-                        // 오답 단어 표시
-                        ForEach(wordList.filter( { !$0.isCorrect })) { word in
-                            NavigationLink(destination: CardAnimationView()) {
+//                         오답 단어 표시
+                        ForEach(fillteredWord) { word in
+                            NavigationLink(destination: CardAnimationView(wordInfo: word)) {
                                 VStack {
                                     HStack {
                                         Text("\(word.word)")
@@ -99,8 +101,8 @@ struct ResultView: View {
                             .foregroundStyle(Color("bookmarkColor"))
                         
                         // 정답 단어 표시
-                        ForEach(wordList.filter( { $0.isCorrect })) { word in
-                            NavigationLink(destination: CardAnimationView()) {
+                        ForEach(fillteredWord) { word in
+                            NavigationLink(destination: CardAnimationView(wordInfo: word)) {
                                 VStack {
                                     HStack {
                                         Text("\(word.word)")
@@ -130,22 +132,19 @@ struct ResultView: View {
                 }
             }.padding(.horizontal, 42)  // 좌우 여백
                 .onAppear(perform: {
-                            wordList = word
+                    print(words)
                         })
         }
         Spacer()
     }
     
-    private func clickedBookmark(item: dummyData) {
-        if let index = wordList.firstIndex(where: { $0.id == item.id }) {
-            wordList[index].isBookmarked = !wordList[index].isBookmarked
+    private func clickedBookmark(item: wordDictionary) {
+        if let index = words.firstIndex(where: { $0.id == item.id }) {
+            words[index].isBookmarked = !words[index].isBookmarked
+//            words[index].isBookmarked.toggle()
+            try? modelContext.save()
+            print(words[index])
         }
-        
-        print(word)
-        print(index)
-        let wordDictionary = wordDictionary(id: item.id, word: item.word, meaning: item.meaning, imgPath: item.imgPath, isCorrect: item.isCorrect, isBookmarked: !item.isBookmarked)
-        modelContext.insert(wordDictionary)
-        print("저장 후", wordList)
     }
     
 }
@@ -174,5 +173,5 @@ struct CircularChartView: View {
 }
 
 #Preview {
-    ResultView(word: [dummyData(id: 1, word: "apple", meaning: "사과", imgPath: "dddsd", isBookmarked: false, isCorrect: true)])
+    ResultView()
 }
