@@ -10,11 +10,11 @@ import SwiftData
 
 struct ResultView: View {
     @Environment(\.modelContext) private var modelContext
-    //@Query var words: [wordDictionary]
+    @Query var words: [wordDictionary]
     
     var word: [dummyData]
     
-    @State private var isBookmarked: Bool = false
+    @State private var wordList : [dummyData] = []
     
     // 정답 개수
     private var correctCount: Int {
@@ -67,7 +67,7 @@ struct ResultView: View {
                 ScrollView {
                     VStack {
                         // 오답 단어 표시
-                        ForEach(word.filter( { !$0.isCorrect })) { word in
+                        ForEach(wordList.filter( { !$0.isCorrect })) { word in
                             NavigationLink(destination: CardAnimationView()) {
                                 VStack {
                                     HStack {
@@ -78,10 +78,10 @@ struct ResultView: View {
                                         Spacer()
                                         // 북마크 버튼
                                         Button(action: {
-                                            isBookmarked.toggle()
+                                            clickedBookmark(item: word)
                                         }) {
-                                            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
-                                                .foregroundStyle(isBookmarked ? Color("bookmarkColor") : .gray)
+                                            Image(systemName: word.isBookmarked ? "bookmark.fill" : "bookmark")
+                                                .foregroundStyle(word.isBookmarked ? Color("bookmarkColor") : .gray)
                                                 .padding()
                                         }
                                     }
@@ -99,7 +99,7 @@ struct ResultView: View {
                             .foregroundStyle(Color("bookmarkColor"))
                         
                         // 정답 단어 표시
-                        ForEach(word.filter( { $0.isCorrect })) { word in
+                        ForEach(wordList.filter( { $0.isCorrect })) { word in
                             NavigationLink(destination: CardAnimationView()) {
                                 VStack {
                                     HStack {
@@ -110,10 +110,10 @@ struct ResultView: View {
                                         Spacer()
                                         // 북마크 버튼
                                         Button(action: {
-                                            isBookmarked.toggle()
+                                            clickedBookmark(item: word)
                                         }) {
-                                            Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
-                                                .foregroundStyle(isBookmarked ? Color("bookmarkColor") : .gray)
+                                            Image(systemName: word.isBookmarked ? "bookmark.fill" : "bookmark")
+                                                .foregroundStyle(word.isBookmarked ? Color("bookmarkColor") : .gray)
                                                 .padding()
                                         }
                                     }
@@ -126,11 +126,28 @@ struct ResultView: View {
                             }
                         }
                     }
+                    
                 }
             }.padding(.horizontal, 42)  // 좌우 여백
+                .onAppear(perform: {
+                            wordList = word
+                        })
         }
         Spacer()
     }
+    
+    private func clickedBookmark(item: dummyData) {
+        if let index = wordList.firstIndex(where: { $0.id == item.id }) {
+            wordList[index].isBookmarked = !wordList[index].isBookmarked
+        }
+        
+        print(word)
+        print(index)
+        let wordDictionary = wordDictionary(id: item.id, word: item.word, meaning: item.meaning, imgPath: item.imgPath, isCorrect: item.isCorrect, isBookmarked: !item.isBookmarked)
+        modelContext.insert(wordDictionary)
+        print("저장 후", wordList)
+    }
+    
 }
 
 struct CircularChartView: View {

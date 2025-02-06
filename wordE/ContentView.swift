@@ -18,7 +18,7 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = wordDictionary(word: String(), meaning: String(), imgPath: String(), isCorrect: Bool(), isBookmarked: Bool())
+            let newItem = wordDictionary(id: Int(), word: String(), meaning: String(), imgPath: String(), isCorrect: Bool(), isBookmarked: Bool())
             modelContext.insert(newItem)
         }
     }

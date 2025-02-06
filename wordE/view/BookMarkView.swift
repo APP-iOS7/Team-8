@@ -63,7 +63,7 @@ struct BookMarkView: View {
                                             .padding()
                                     }
                                 }
-                                .frame(width: .infinity, height: 50)
+                                .frame(width: 315, height: 50)
                                 .background(Color("sectionBackColor"))
                                 .overlay {
                                     RoundedRectangle(cornerRadius: 13).stroke(Color("sectionBorderColor"))
