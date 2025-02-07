@@ -29,12 +29,14 @@ struct BookMarkView: View {
                 Picker("정렬", selection: $sortOrder) {
                     Text("오름차순").tag(SortOrder.ascending)
                     Text("내림차순").tag(SortOrder.descending)
+                        
                 }
                 .padding(.trailing, 70)
                 .pickerStyle(.menu)
                 .frame(width: 180, height: 40)
                 .background(Color("pickerColor"))
                 .tint(Color("TextColor"))
+                .padding(.top, 1)
                 .overlay {
                     RoundedRectangle(cornerRadius: 13)
                         .stroke(Color("sectionBorderColor"), lineWidth: 1)
