@@ -27,8 +27,6 @@
 - 북마크 기능을 이용해 나중에 보고 싶은 영어단어 플래시 카드를 저장해 놓을 수 있습니다.
 
 ## 실행 화면
-![Simulator_Screen_Recording_-_iPhone_16_Pro_-_2025-02-07_at_11 04 43](https://github.com/user-attachments/assets/fa7ea902-5766-4e9e-8b46-cb9d839d34d1)
-
 <img src="https://github.com/user-attachments/assets/0ffcf9c5-80fd-4d2f-bb7e-e4b0c38b2399">
 
 
