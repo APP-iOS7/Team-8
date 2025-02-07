@@ -29,6 +29,8 @@
 ## 실행 화면
 ![Simulator_Screen_Recording_-_iPhone_16_Pro_-_2025-02-07_at_11 04 43](https://github.com/user-attachments/assets/fa7ea902-5766-4e9e-8b46-cb9d839d34d1)
 
+<img src="https://github.com/user-attachments/assets/0ffcf9c5-80fd-4d2f-bb7e-e4b0c38b2399">
+
 
 ## 👩🏻‍💻 개발자 소개
 
