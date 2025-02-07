@@ -76,7 +76,7 @@
  - 서로가 생각하지 못한 아이디어를 낼 수 있었음
 
 2. **문제 및 해결 과정과 느낀 점**
-- 다시 어플을 사용하고 결과 화면을 보게 되었을 때 북마크를 한 단어에 북마크 표시가 되지 않는 버그와 데이터 처리 로직 변경이 필요
+- 다시 앱을 사용하고 결과 화면을 보게 되었을 때 북마크를 한 단어에 북마크 표시가 되지 않는 버그와 데이터 처리 로직 변경이 필요
   이에 기존 Swiftdata Model에서 새로 만든 Swiftdata Model로 전환하였으나 새로운 형식의 데이터로 인해 전체적인 코드의 수정이 필요하였으며
    fetal 오류가 발생
    이에 Migration의 중요성과 기획 시 데이터 부분도 고려를 해야 하는 것을 알게 됨
@@ -86,7 +86,8 @@
     하지만 다시 기존 코드에 적용했을 때 전과 같은 현상이 발생하였음. 이에 기존 코드에 문제가 되는 것을 인지하게 되었고 문제가 될 수 있는 부분을 주석처리 하며 문제를 해결해 나감
     문제는 NavigationStack안에 바로 VStack으로 감싼 애니메이션 뷰에서 문제가 생기는 것을 확인함.  기존 VStack을 ScrollView로 감쌌고 .scrollDisabled(true) modifier을 이용해서 기존 View와 같게 만듦. 오류를 마주했을 때 당황하기 보다는 하나씩 해결해가보는 것이 중요한 것을 알게 되었음
 
-- 기존 Swiftdata Model에서 새로운 Swift Model로 변경하면서 발생한 Compile Time Out 문제를 접하게 됨 기존에 사용하던 NavigationLink에 연결된 View에서 Model 변경으로 Argument를 받아와야 하는 상황이었으나 이를 발견하지 못하고 Build를 진행
+- 기존 Swiftdata Model에서 새로운 Swift Model로 변경하면서 발생한 Compile Time Out 문제를 접하게 됨.
+   기존에 사용하던 NavigationLink에 연결된 View에서 Model 변경으로 Argument를 받아와야 하는 상황이었으나 이를 발견하지 못하고 Build를 진행
  하지만 컴파일러는 Compile Time Out 오류만 표시해줄 뿐 Argument를 넣어줘야 한다는 오류를 알려주지 않음
  이 문제 또한 레퍼런스와 자문으로 해결하였으며, 문제가 될 수 있는 부분을 주석처리하면서 원인을 파악
    
