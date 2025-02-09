@@ -26,71 +26,86 @@ struct BookMarkView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            VStack {
-                Picker("정렬", selection: $sortOrder) {
-                    Text("오름차순").tag(SortOrder.ascending)
-                    Text("내림차순").tag(SortOrder.descending)
-                        
-                }
-                .padding(.trailing, 70)
-                .pickerStyle(.menu)
-                .frame(width: 180, height: 40)
-                .background(Color("pickerColor"))
-                .tint(Color("TextColor"))
-                .padding(.top, 1)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 13)
-                        .stroke(Color("sectionBorderColor"), lineWidth: 1)
-                }
+        VStack {
+            HStack {
+                
+                Spacer()
+                
+                    Picker("정렬", selection: $sortOrder) {
+                        Text("오름차순").tag(SortOrder.ascending)
+                        Text("내림차순").tag(SortOrder.descending)
+                    }
+                    .padding()
+                    .pickerStyle(.menu)
+                    .frame(width: 140, height: 40, alignment: .center)
+                    .background(Color("pickerColor"))
+                    .tint(Color("TextColor"))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 13)
+                            .stroke(Color("sectionBorderColor"), lineWidth: 1)
+                    }
+                    .padding(.trailing, 42)
             }
-
+            .padding(.top)
+            
             ScrollView {
-                VStack {
-                    ForEach(sortedWords) { word in
-                        NavigationLink(destination: CardAnimationView(wordInfo: word)) {
-                            VStack {
-                                HStack {
-                                    Text("\(word.word)")
-                                        .font(.system(size: 21, weight: .semibold))
-                                        .foregroundStyle(Color.black)
-                                        .padding()
-                                    Spacer()
-                                    // 북마크 버튼
-                                    Button(action: {
-                                        if word.isBookmarked {
-                                            wordToUnbookmark = word
-                                            showingUnbookmarkAlert = true
-                                        } else {
-                                            clickedBookmark(item: word)
-                                        }
-                                    }) {
-                                        Image(systemName: word.isBookmarked ? "bookmark.fill" : "bookmark")
-                                            .foregroundStyle(word.isBookmarked ? Color("bookmarkColor") : .gray)
+                if sortedWords.isEmpty {
+                    Text("북마크된 단어가 없습니다")
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(.top, 300)
+                } else {
+                    VStack {
+                        ForEach(sortedWords) { word in
+                            NavigationLink(destination: CardAnimationView(wordInfo: word)) {
+                                VStack {
+                                    HStack {
+                                        Text("\(word.word)")
+                                            .font(.system(size: 21, weight: .semibold))
+                                            .foregroundStyle(Color.black)
                                             .padding()
+                                        Spacer()
+                                        // 북마크 버튼
+                                        Button(action: {
+                                            if word.isBookmarked {
+                                                wordToUnbookmark = word
+                                                showingUnbookmarkAlert = true
+                                            } else {
+                                                clickedBookmark(item: word)
+                                            }
+                                        }) {
+                                            Image(systemName: word.isBookmarked ? "bookmark.fill" : "bookmark")
+                                                .foregroundStyle(word.isBookmarked ? Color("bookmarkColor") : .gray)
+                                                .padding()
+                                        }
                                     }
-                                }
-                                .frame(width: 315, height: 50)
-                                .background(Color("sectionBackColor"))
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 13).stroke(Color("sectionBorderColor"))
+                                    .frame(width: 315, height: 50)
+                                    .background(Color("sectionBackColor"))
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 13).stroke(Color("sectionBorderColor"))
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                .alert("북마크 해제", isPresented: $showingUnbookmarkAlert, presenting: wordToUnbookmark)
-                { word in
-                    Button("취소", role: .cancel) {}
-                    Button("북마크 해제", role: .destructive) {
-                        clickedBookmark(item: word)
+                    //Alert before unbookmark
+                    .alert("북마크 해제", isPresented: $showingUnbookmarkAlert, presenting: wordToUnbookmark)
+                    { word in
+                        Button("취소", role: .cancel) {}
+                        Button("북마크 해제", role: .destructive) {
+                            clickedBookmark(item: word)
+                        }
+                    } message: { word in
+                        Text("\(word.word)의 북마크를 해제 하시겠습니까?")
                     }
-                } message: { word in
-                    Text("\(word.word)의 북마크를 해제 하시겠습니까?")
                 }
             }
+            .padding()
         }
+        
         Spacer()
+        
     }
     private func clickedBookmark(item: wordDictionary) {
         if let index = words.firstIndex(where: { $0.id == item.id }) {
