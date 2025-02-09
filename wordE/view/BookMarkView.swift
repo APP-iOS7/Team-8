@@ -13,6 +13,8 @@ struct BookMarkView: View {
     @Query var words: [wordDictionary]
     @State private var sortOrder: SortOrder = .ascending
     @State private var isBookmarked: Bool = false
+    @State private var showingUnbookmarkAlert = false
+    @State private var wordToUnbookmark: wordDictionary?
     
     var sortedWords: [wordDictionary] {
         // 북마크된 단어들만 추출
@@ -56,7 +58,12 @@ struct BookMarkView: View {
                                     Spacer()
                                     // 북마크 버튼
                                     Button(action: {
-                                        clickedBookmark(item: word)
+                                        if word.isBookmarked {
+                                            wordToUnbookmark = word
+                                            showingUnbookmarkAlert = true
+                                        } else {
+                                            clickedBookmark(item: word)
+                                        }
                                     }) {
                                         Image(systemName: word.isBookmarked ? "bookmark.fill" : "bookmark")
                                             .foregroundStyle(word.isBookmarked ? Color("bookmarkColor") : .gray)
@@ -71,6 +78,15 @@ struct BookMarkView: View {
                             }
                         }
                     }
+                }
+                .alert("북마크 해제", isPresented: $showingUnbookmarkAlert, presenting: wordToUnbookmark)
+                { word in
+                    Button("취소", role: .cancel) {}
+                    Button("북마크 해제", role: .destructive) {
+                        clickedBookmark(item: word)
+                    }
+                } message: { word in
+                    Text("\(word.word)의 북마크를 해제 하시겠습니까?")
                 }
             }
         }
