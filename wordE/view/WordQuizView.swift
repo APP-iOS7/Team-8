@@ -85,7 +85,9 @@ struct WordQuizView: View {
                         ZStack() {
                             Section {
                                 HStack {
+                                    
                                     Spacer()
+                                    
                                     TextField("", text: $textFieldText)
                                         .frame(width: 215, height: 49)
                                         .padding(.horizontal, 10)
@@ -143,11 +145,11 @@ struct WordQuizView: View {
     }
     
     
-    func insertSwiftData(comparaWordInfo: wordDictionary) {
-        let isContain = wordItems.contains { $0.word == comparaWordInfo.word }
+    func insertSwiftData(compareWordInfo: wordDictionary) {
+        let isContain = wordItems.contains { $0.word == compareWordInfo.word }
         if !isContain {
-            wordItemsToState.append(comparaWordInfo)
-            modelContext.insert(comparaWordInfo)
+            wordItemsToState.append(compareWordInfo)
+            modelContext.insert(compareWordInfo)
             try? modelContext.save()
         }
     }
@@ -162,7 +164,7 @@ struct WordQuizView: View {
                 isCorrect: false,
                 isBookmarked: false
             )
-            insertSwiftData(comparaWordInfo: wordModelItem)
+            insertSwiftData(compareWordInfo: wordModelItem)
         }
     }
     
@@ -195,7 +197,7 @@ struct WordQuizView: View {
     }
 }
 
-struct wordData : Codable, Identifiable {
+struct wordData: Codable, Identifiable {
     var id: UUID = UUID()
     var word : String
     var meaning : String
