@@ -99,7 +99,7 @@ struct CardFront : View {
 
 struct CardAnimationView: View {
     @State var backDegree = 0.0
-    @State var frontDegree = -90.0
+    @State var frontDegree = 90.0
     @State var isFlipped = false
 
     let width : CGFloat = 200
