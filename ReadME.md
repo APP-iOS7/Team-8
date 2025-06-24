@@ -83,11 +83,13 @@
 
 - NavigationStack 내에 애니메이션 효과를 적용한 View를 실행했을 시 Preview에서 보이는 화면과 다르게 View의 위치, 움직이는 정도가 심각할 정도로 차이가 나는 문제에 직면
     많은 레퍼런스를 찾아보고 자문을 하여 기존의 애니메이션 효과가 아닌 다른 효과를 적용하였고, 새로운 프로젝트 파일을 생성하여 실행했을 때 잘 작동하는 것을 확인함
-    하지만 다시 기존 코드에 적용했을 때 전과 같은 현상이 발생하였음. 이에 기존 코드에 문제가 되는 것을 인지하게 되었고 문제가 될 수 있는 부분을 주석처리 하며 문제를 해결해 나감
-    문제는 NavigationStack안에 바로 VStack으로 감싼 애니메이션 뷰에서 문제가 생기는 것을 확인함.  기존 VStack을 ScrollView로 감쌌고 .scrollDisabled(true) modifier을 이용해서 기존 View와 같게 만듦
+    하지만 다시 기존 코드에 적용했을 때 전과 같은 현상이 발생하였음
+  이에 기존 코드에 문제가 되는 것을 인지하게 되었고 문제가 될 수 있는 부분을 주석처리 하며 문제를 해결해 나감
+    문제는 NavigationStack안에 바로 VStack으로 감싼 애니메이션 뷰에서 문제가 생기는 것을 확인함
+  기존 VStack을 ScrollView로 감쌌고 .scrollDisabled(true) modifier을 이용해서 기존 View와 같게 만듦
   오류를 마주했을 때 당황하기 보다는 하나씩 해결해가보는 것이 중요한 것을 알게 되었음
 
-- 기존 Swiftdata Model에서 새로운 Swift Model로 변경하면서 발생한 Compile Time Out 문제를 접하게 됨.
+- 기존 Swiftdata Model에서 새로운 Swift Model로 변경하면서 발생한 Compile Time Out 문제를 접하게 됨
    기존에 사용하던 NavigationLink에 연결된 View에서 Model 변경으로 Argument를 받아와야 하는 상황이었으나 이를 발견하지 못하고 Build를 진행
  하지만 컴파일러는 Compile Time Out 오류만 표시해줄 뿐 Argument를 넣어줘야 한다는 오류를 알려주지 않음
  이 문제 또한 레퍼런스와 자문으로 해결하였으며, 문제가 될 수 있는 부분을 주석처리하면서 원인을 파악
